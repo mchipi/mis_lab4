@@ -7,8 +7,10 @@ import 'package:mis_lab3/auth.dart';
 import 'package:mis_lab3/calendar.dart';
 import 'package:mis_lab3/create_exam.dart';
 import 'package:mis_lab3/firebase_options.dart';
+import 'package:mis_lab3/map.dart';
 import 'package:mis_lab3/models/exam.dart';
 import 'package:mis_lab3/controllers/notification_controller.dart';
+import 'package:mis_lab3/models/location_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,6 +74,33 @@ class _ListState extends State<ListScreen> {
   final List<Exam> exams = [
     Exam(courseName: 'test', dateTime: DateTime.now()),
   ];
+  final List<LocationModel> locations = [
+    LocationModel(
+      name: 'Skopje',
+      latitude: 41.988466302674475,
+      longitude: 21.46444417848708,
+    ),
+    LocationModel(
+      name: 'Bitola',
+      latitude: 41.025546,
+      longitude: 21.340927,
+    ),
+    LocationModel(
+      name: 'Ohrid',
+      latitude: 41.1231,
+      longitude: 20.8016,
+    ),
+    LocationModel(
+      name: 'Struga',
+      latitude: 41.1784,
+      longitude: 20.6769,
+    ),
+    LocationModel(
+      name: 'Kumanovo',
+      latitude: 42.1323,
+      longitude: 21.7141,
+    ),
+  ];
 
   @override
   void initState() {
@@ -99,6 +128,10 @@ class _ListState extends State<ListScreen> {
       appBar: AppBar(
         title: const Text('Exams'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.map),
+            onPressed: openMap,
+          ),
           IconButton(
             icon: const Icon(Icons.calendar_month),
             onPressed: openCalendar,
@@ -265,6 +298,15 @@ class _ListState extends State<ListScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => Calendar(exams: exams),
+      ),
+    );
+  }
+
+  void openMap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapScreen(locations: locations),
       ),
     );
   }
